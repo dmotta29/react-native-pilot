@@ -1,0 +1,46 @@
+Side notes
+App component
+
+To create a state that fills an array and use it inside a FlatList, use the following syntaxis
+
+ const [courseGoals, setCourseGoals] = useState([]);
+
+    setCourseGoals([...courseGoals, {key: Math.random().toString(), value: goalTitle}])
+}
+
+To use it, use a property in the FlatList like:
+
+keyExtractor={(item) => item.key}
+        data={courseGoals} 
+
+The key extractor will create a diferent key for every element in the array.
+The data will read every element in the array.
+
+And to render a component that is connected to this state, use:
+
+renderItem={itemData => <"ComponentName" title={itemData.item.value}/>}/>
+
+GoalItem component
+
+Component that doesnt receive state, use props to render:
+
+ <Text >{props.title}</Text>
+
+ This "title" is the same that appears in the App component in the renderitem property of FlatList   
+
+ To save an input written by de the user:
+
+ Create a state and a function that hanlders the state:
+
+const [enteredGoal, setEnteredGoal] = useState('');
+    const goalInputHanlder = (enteredText) => {
+        setEnteredGoal(enteredText)
+      }
+
+Then in your TextInput, modify onChangeText, to trigger the function:
+
+onChangeText={goalInputHanlder}
+
+Then in your button, make the action and bind:
+
+onPress={props.onAddGoal.bind(this, enteredGoal)}
